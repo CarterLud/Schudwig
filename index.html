@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Schudwig — Interactive Mini‑Lab</title>
+    <meta name="description" content="Schudwig is a playful micro‑lab of small games, tools, and interactive experiments." />
+    <meta name="theme-color" content="#0b0f1a" />
+    <meta name="color-scheme" content="dark light" />
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <script defer src="script.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <!-- Scroll progress bar -->
+    <div id="progress" aria-hidden="true"></div>
+
+    <header class="site-header">
+      <nav class="nav">
+        <a class="brand" href="#hero" aria-label="Schudwig home">
+          <span class="brand-mark" aria-hidden="true">S</span>
+          <span class="brand-text">Schudwig</span>
+        </a>
+        <ul class="nav-links">
+          <li><a href="#features">Features</a></li>
+          <li><a href="#showcase">Showcase</a></li>
+          <li><a href="#about">About</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main id="main" tabindex="-1">
+      <section id="hero" class="section hero">
+        <div class="hero-bg" aria-hidden="true">
+          <div class="orb orb-red"></div>
+          <div class="orb orb-blue"></div>
+        </div>
+        <div class="container hero-inner">
+          <div class="eyebrow reveal">Interactive Mini‑Lab</div>
+          <h1 class="headline reveal">
+            Schudwig
+          </h1>
+          <p class="subhead reveal">
+            A living playground for small games, tools, and delightful experiments.
+          </p>
+          <div class="cta-row reveal">
+            <a class="btn btn-primary magnet" href="#showcase">Explore Projects</a>
+            <a class="btn btn-ghost magnet" href="#about">About This</a>
+          </div>
+          <div class="scroll-hint" aria-hidden="true">
+            <span>Scroll</span>
+            <svg width="12" height="24" viewBox="0 0 12 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="10" height="22" rx="5" stroke="currentColor" opacity="0.6"/><circle cx="6" cy="7" r="2" fill="currentColor"/></svg>
+          </div>
+        </div>
+      </section>
+
+      <section id="features" class="section features">
+        <div class="container">
+          <h2 class="section-title reveal">What you'll find here</h2>
+          <div class="features-grid">
+            <article class="feature-card reveal tilt" data-tilt>
+              <div class="feature-icon">
+                <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true"><path d="M12 2l3 6 6 .9-4.5 4.4 1.1 6.3L12 17l-5.6 2.6 1.1-6.3L3 8.9 9 8z" fill="currentColor"/></svg>
+              </div>
+              <h3>Hand‑crafted</h3>
+              <p>Small, polished explorations built with care and a sense of play.</p>
+            </article>
+            <article class="feature-card reveal tilt" data-tilt>
+              <div class="feature-icon">
+                <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true"><path d="M4 6h16v2H4V6zm0 5h16v2H4v-2zm0 5h16v2H4v-2z" fill="currentColor"/></svg>
+              </div>
+              <h3>Playable & Useful</h3>
+              <p>From mini‑games to micro‑tools—utility with personality.</p>
+            </article>
+            <article class="feature-card reveal tilt" data-tilt>
+              <div class="feature-icon">
+                <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true"><path d="M12 4a8 8 0 100 16 8 8 0 000-16zm1 4v5h4" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+              </div>
+              <h3>Snappy & Smooth</h3>
+              <p>High‑FPS interactions, gentle motion, and crisp visual feedback.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="showcase" class="section showcase">
+        <div class="container">
+          <div class="section-head">
+            <h2 class="section-title reveal">Showcase</h2>
+            <p class="section-kicker reveal">Tiles below are placeholders — new experiments are on the way.</p>
+          </div>
+
+          <div class="tiles">
+            <a class="tile reveal tilt" href="#" aria-label="Coming soon">
+              <div class="tile-media gradient-red"></div>
+              <div class="tile-body">
+                <h3>Coming Soon · Game 01</h3>
+                <p>Reactive movement, particle bursts, and score chaining.</p>
+              </div>
+            </a>
+            <a class="tile reveal tilt" href="#" aria-label="Coming soon">
+              <div class="tile-media gradient-blue"></div>
+              <div class="tile-body">
+                <h3>Coming Soon · Tool 02</h3>
+                <p>Generative palettes and quick export.</p>
+              </div>
+            </a>
+            <a class="tile reveal tilt" href="#" aria-label="Coming soon">
+              <div class="tile-media gradient-mix"></div>
+              <div class="tile-body">
+                <h3>Coming Soon · Toy 03</h3>
+                <p>Playful physics and gooey springs.</p>
+              </div>
+            </a>
+            <a class="tile reveal tilt" href="#" aria-label="Coming soon">
+              <div class="tile-media gradient-blue"></div>
+              <div class="tile-body">
+                <h3>Coming Soon · Tool 04</h3>
+                <p>Quick utilities with delightful polish.</p>
+              </div>
+            </a>
+            <a class="tile reveal tilt" href="#" aria-label="Coming soon">
+              <div class="tile-media gradient-red"></div>
+              <div class="tile-body">
+                <h3>Coming Soon · Game 05</h3>
+                <p>Arcade vibes and tactile feedback.</p>
+              </div>
+            </a>
+            <a class="tile reveal tilt" href="#" aria-label="Coming soon">
+              <div class="tile-media gradient-mix"></div>
+              <div class="tile-body">
+                <h3>Coming Soon · Toy 06</h3>
+                <p>Generative visuals with audio reaction.</p>
+              </div>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section id="about" class="section about">
+        <div class="container">
+          <div class="about-card reveal">
+            <h2>About Schudwig</h2>
+            <p>
+              Schudwig is an evolving gallery of small, self‑contained experiments. The
+              goal is to explore ideas quickly, keep them playful, and make them
+              accessible through a clean, modern interface.
+            </p>
+            <div class="about-actions">
+              <a class="btn btn-primary magnet" href="#showcase">Enter the Gallery</a>
+              <a class="btn btn-ghost magnet" href="mailto:hello@example.com">Get in touch</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="foot-left">© <span id="year"></span> Schudwig</div>
+        <div class="foot-right">
+          <a href="#hero">Back to top</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Pointer FX -->
+    <div class="cursor" aria-hidden="true"></div>
+
+    <noscript>
+      <style>.reveal{opacity:1; transform:none}</style>
+    </noscript>
+  </body>
+  </html>
+
+

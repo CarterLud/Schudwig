@@ -1,0 +1,5 @@
+---
+description: Only use vanilla javascript, html, tailwind and markdown/text files if needed/requested
+globs:
+alwaysApply: true
+---
