@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Orbit Pong — Schudwig</title>
+    <meta name="description" content="Orbit Pong: classic Pong with gravity wells. Local 2P chaos in neon.">
+    <meta name="theme-color" content="#000000" />
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../styles.css" />
+    <link rel="stylesheet" href="orbit-pong.css" />
+    <script defer src="orbit-pong.js"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="nav">
+        <a class="brand" href="../index.html" aria-label="Back to Schudwig">
+          <span class="brand-mark" aria-hidden="true">S</span>
+          <span class="brand-text">Schudwig</span>
+        </a>
+        <ul class="nav-links">
+          <li><a href="../index.html#showcase">Showcase</a></li>
+          <li><a href="../index.html#about">About</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main class="game-root">
+      <div class="scorebar" id="scorebar" aria-live="polite">
+        <div class="score left" id="scoreL">0</div>
+        <div class="title" id="scoreTitle">Orbit Pong</div>
+        <div class="score right" id="scoreR">0</div>
+      </div>
+
+      <canvas id="game" aria-label="Orbit Pong game canvas" role="img"></canvas>
+
+      <div class="hud" id="hud" aria-hidden="true"></div>
+      <div class="help-chip" id="help">
+        <span>W/S • Player 1</span>
+        <span>↑/↓ • Player 2</span>
+        <span>Space • Reset</span>
+      </div>
+
+      <div class="info-modal" id="infoModal" role="dialog" aria-modal="true" aria-labelledby="infoTitle">
+        <div class="info-card">
+          <h2 id="infoTitle">Orbit Pong</h2>
+          <p>Classic Pong with a cosmic twist.</p>
+          <ul>
+            <li>2 players: W/S and ↑/↓ to move paddles</li>
+            <li>First to 10 points wins</li>
+            <li>Gravity wells fade in/out and tug the ball</li>
+            <li>Power‑ups appear for 15s (max 4): Split, Fast, No‑Gravity, Curve</li>
+          </ul>
+          <button id="startBtn" class="btn btn-primary">Okay, let’s play</button>
+        </div>
+      </div>
+    </main>
+  </body>
+  </html>
+
+
