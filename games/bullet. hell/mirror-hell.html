@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mirror Hell — Schudwig</title>
+    <meta name="description" content="Mirror Hell: control two mirrored ships in a neon bullet hell." />
+    <meta name="theme-color" content="#000000" />
+    <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../styles.css" />
+    <link rel="stylesheet" href="mirror-hell.css" />
+    <script defer src="mirror-hell.js"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="nav">
+        <a class="brand" href="../../index.html" aria-label="Back to Schudwig">
+          <span class="brand-mark" aria-hidden="true">S</span>
+          <span class="brand-text">Schudwig</span>
+        </a>
+        <ul class="nav-links">
+          <li><a href="../../index.html#showcase">Showcase</a></li>
+          <li><a href="../../index.html#about">About</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main class="game-root">
+      <div class="scorebar" id="scorebar">
+        <div class="lives" id="lives" aria-live="polite" title="Lives"></div>
+        <div class="title">Mirror Hell</div>
+        <div class="score" id="score">000000</div>
+      </div>
+      <canvas id="game" aria-label="Mirror Hell game canvas" role="img"></canvas>
+      <div class="hud" id="hud"></div>
+
+      <div class="info-modal" id="infoModal" role="dialog" aria-modal="true" aria-labelledby="infoTitle">
+        <div class="info-card">
+          <h2 id="infoTitle">Mirror Hell</h2>
+          <p>Control two mirrored ships. Dodge the neon storm and shoot back.</p>
+          <ul>
+            <li>Move: Arrow Keys or WASD</li>
+            <li>Shoot: Space or J</li>
+            <li>Survive waves, destroy enemies, earn perfect‑dodge bonuses</li>
+          </ul>
+          <button id="startBtn" class="btn btn-primary">Okay, let’s play</button>
+        </div>
+      </div>
+    </main>
+  </body>
+  </html>
+
+

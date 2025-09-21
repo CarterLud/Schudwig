@@ -1,0 +1,20 @@
+/* Mirror Hell Styles */
+body { background: #000; }
+.game-root { position: relative; width: 100%; height: 100vh; overflow: hidden; }
+#game { display: block; width: 100%; height: 100%; background: radial-gradient(1200px 800px at 50% -10%, rgba(58,141,255,0.12), transparent 60%), radial-gradient(900px 700px at 50% 120%, rgba(255,54,93,0.12), transparent 60%), #000; }
+.scorebar { position: absolute; top: 0; left: 0; right: 0; height: 56px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 12px; padding: 8px 12px; z-index: 10; backdrop-filter: blur(8px) saturate(140%); background: rgba(0,0,0,.55); border-bottom: 1px solid rgba(255,255,255,.1); }
+.scorebar .title { font-weight: 800; letter-spacing: 1px; color: #e6e9f2; text-shadow: 0 0 10px rgba(58,141,255,.4); }
+.scorebar .score { justify-self: end; padding: 6px 10px; border-radius: 10px; font-weight: 900; color: #0b0f1a; background: #15b2ff; box-shadow: 0 8px 20px rgba(0,0,0,.45); }
+.scorebar .lives { justify-self: start; display: inline-flex; gap: 6px; }
+.life { width: 14px; height: 14px; background: #ff3a6e; clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); filter: drop-shadow(0 0 6px rgba(255,58,110,.6)); }
+
+.hud { position: absolute; top: 64px; left: 50%; transform: translateX(-50%); color: #e6e9f2; font-weight: 800; letter-spacing: 1px; pointer-events: none; text-shadow: 0 0 10px rgba(58,141,255,.5), 0 0 14px rgba(255,54,93,.4); }
+
+.info-modal { position: absolute; inset: 0; display: grid; place-items: center; background: rgba(0,0,0,.6); z-index: 20; }
+.info-card { width: min(640px, 92vw); background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03)); border: 1px solid rgba(255,255,255,.14); border-radius: 16px; padding: 18px; color: #e6e9f2; box-shadow: 0 20px 50px rgba(0,0,0,.55); }
+.info-card h2 { margin: 6px 0 8px; font-size: 24px; }
+.info-card p { margin: 0 0 8px; color: #c7d1ea; }
+.info-card ul { margin: 0 0 12px 18px; color: #aeb8cf; }
+.info-card button { margin-top: 6px; }
+
+
