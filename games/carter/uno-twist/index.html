@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>UNO Twist — Multiplayer</title>
+    <meta name="description" content="UNO with a Twist — Multiplayer with Game PIN lobby." />
+    <link rel="icon" type="image/svg+xml" href="../../../assets/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="wrap">
+      <header class="topbar">
+        <a class="home" href="../../../index.html">← Back to Schudwig</a>
+        <h1>UNO Twist</h1>
+        <div class="status" id="connStatus" aria-live="polite">Disconnected</div>
+      </header>
+
+      <section id="lobbyScreen" class="card">
+        <h2>Lobby</h2>
+        <div class="mode-select" id="modeSelect">
+          <button id="hostChoice" class="btn btn-primary">Host</button>
+          <button id="joinChoice" class="btn btn-accent">Join</button>
+        </div>
+        <div class="lobby-grid">
+          <div class="panel" id="hostPanel" hidden>
+            <h3>Create Game</h3>
+            <label class="field">
+              <span>Name</span>
+              <input id="hostName" maxlength="16" placeholder="Your name" />
+            </label>
+            <button id="createBtn" class="btn">Create Lobby</button>
+            <div id="createdPin" class="pin"></div>
+            <div class="row-gap"></div>
+            <button id="backFromHost" class="btn btn-ghost">Back</button>
+          </div>
+          <div class="panel" id="joinPanel" hidden>
+            <h3>Join Game</h3>
+            <label class="field">
+              <span>Name</span>
+              <input id="joinName" maxlength="16" placeholder="Your name" />
+            </label>
+            <label class="field">
+              <span>Game PIN</span>
+              <input id="joinPin" maxlength="6" placeholder="000000" />
+            </label>
+            <button id="joinBtn" class="btn">Join Lobby</button>
+            <div class="row-gap"></div>
+            <button id="backFromJoin" class="btn btn-ghost">Back</button>
+          </div>
+          <div class="panel" id="playersPanel" hidden>
+            <h3>Players</h3>
+            <ul id="players" class="players"></ul>
+            <button id="startBtn" class="btn btn-primary" disabled hidden>Start Game</button>
+            <div id="twistInfo" class="twist-info" hidden>
+              <div class="twist-label">Round Twist</div>
+              <div id="twistName" class="twist-name"></div>
+              <div id="twistDesc" class="twist-desc"></div>
+            </div>
+            <div class="row-gap"></div>
+            <div class="exit-row">
+              <button id="leaveLobby" class="btn btn-ghost">Back</button>
+              <a id="toHomeBtn" class="btn btn-accent" href="../../../index.html">Home</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="gameScreen" class="card" hidden>
+        <div class="top-row">
+          <div class="pin-box">PIN: <span id="pinText">------</span></div>
+          <div class="turn-box">Turn: <span id="turnPlayer">-</span></div>
+          <div class="twist-badge" id="twistBadge"></div>
+        </div>
+
+        <div class="opponents" id="opponents"></div>
+
+        <div class="center-board">
+          <div class="pile draw-pile">
+            <div class="label">Deck</div>
+            <button id="drawPileFace" class="card-face face-back" title="Draw a card"></button>
+          </div>
+          <div class="pile discard">
+            <div class="label">Pile</div>
+            <div id="discardTop" class="card-face face-back"></div>
+          </div>
+        </div>
+
+        <div class="board">
+          <div class="actions">
+            <button id="unoBtn" class="btn" hidden>UNO!</button>
+          </div>
+          <div class="hand">
+            <div class="label">Your Hand</div>
+            <div id="hand" class="hand-cards"></div>
+          </div>
+        </div>
+
+        <div id="messages" class="messages" aria-live="polite"></div>
+      </section>
+
+      <div id="colorPicker" class="modal" hidden>
+        <div class="modal-content">
+          <h3>Choose a color</h3>
+          <div class="color-choices">
+            <button class="color red" data-color="red"></button>
+            <button class="color yellow" data-color="yellow"></button>
+            <button class="color green" data-color="green"></button>
+            <button class="color blue" data-color="blue"></button>
+          </div>
+        </div>
+      </div>
+
+      <div id="slamOverlay" class="slam" hidden>
+        <div class="slam-box">
+          <div class="slam-title">Keyboard Slam!</div>
+          <div>Press Space now!</div>
+        </div>
+      </div>
+    </main>
+
+    <noscript>
+      <style>.card{opacity:1;transform:none}</style>
+    </noscript>
+    <script src="client.js"></script>
+  </body>
+  </html>
+
+

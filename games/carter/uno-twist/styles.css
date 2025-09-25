@@ -1,0 +1,73 @@
+:root{
+  --bg:#0b0f1a;--panel:#121829;--text:#e5ecff;--muted:#9fb0d6;--accent:#6cf;--accent2:#f36;
+  --red:#ff4d4d;--yellow:#ffd166;--green:#29d391;--blue:#48a8ff;
+}
+*{box-sizing:border-box}
+[hidden]{display:none !important}
+html,body{height:100%}
+body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:radial-gradient(1200px 800px at 20% -10%,#182038 0%,transparent 60%),radial-gradient(900px 600px at 120% 10%,#1a2340 0%,transparent 60%),var(--bg);color:var(--text)}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+.topbar{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.topbar .home{color:var(--muted);text-decoration:none}
+.topbar h1{flex:1;margin:0;font-weight:800;letter-spacing:0.3px}
+.status{font-size:12px;color:var(--muted)}
+.card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0));border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:18px 18px 22px;box-shadow:0 10px 30px rgba(0,0,0,0.35)}
+.lobby-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.panel{background:rgba(0,0,0,0.18);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:14px}
+.field{display:flex;flex-direction:column;gap:6px;margin:10px 0}
+.field input{background:#0f1426;border:1px solid #202a47;border-radius:10px;color:var(--text);padding:10px 12px}
+.btn{appearance:none;background:#1a2750;border:1px solid #2b3a72;color:#d7e3ff;border-radius:10px;padding:10px 14px;font-weight:600;cursor:pointer}
+.btn:hover{filter:brightness(1.05)}
+.btn-primary{background:linear-gradient(135deg,var(--accent),#6ac8ff);border-color:#76d1ff;color:#001a2e}
+.btn-accent{background:linear-gradient(135deg,var(--accent2),#ff7ab3);border-color:#ff89bf;color:#21000b}
+.btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.22);color:var(--muted)}
+.mode-select{display:flex;gap:12px;margin-bottom:12px}
+.pin{margin-top:8px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:20px;letter-spacing:3px}
+.players{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.players li{padding:6px 10px;border:1px solid rgba(255,255,255,0.08);border-radius:999px;background:rgba(0,0,0,0.2)}
+.twist-info{margin-top:10px;padding:10px;border:1px dashed rgba(255,255,255,0.15);border-radius:10px}
+.twist-label{font-size:12px;color:var(--muted)}
+.twist-name{font-weight:700}
+.twist-desc{font-size:13px;color:var(--muted)}
+.row-gap{height:8px}
+.exit-row{display:flex;gap:10px;margin-top:6px}
+.top-row{display:flex;gap:12px;align-items:center;justify-content:space-between;margin-bottom:12px}
+.pin-box,.turn-box{background:rgba(0,0,0,0.2);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:8px 10px;color:var(--muted)}
+.twist-badge{font-size:12px;color:#001a2e;background:linear-gradient(135deg,#f36,#ff7ab3);padding:6px 10px;border-radius:999px}
+.opponents{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.opponent{display:flex;align-items:center;gap:8px;background:rgba(0,0,0,0.18);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:10px 12px}
+.opponent .name{font-size:12px;color:var(--muted)}
+.opponent .back{width:40px;height:56px;border-radius:8px;background:linear-gradient(135deg,#121c3a,#1a2750);border:2px solid rgba(255,255,255,0.08)}
+.center-board{display:flex;align-items:center;justify-content:center;gap:28px;margin:10px 0 16px}
+.pile{display:flex;flex-direction:column;align-items:center;gap:6px}
+.board{display:grid;grid-template-columns:1fr;gap:16px;align-items:start}
+.label{font-size:12px;color:var(--muted);margin-bottom:6px}
+.discard{background:rgba(0,0,0,0.18);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:12px}
+.card-face{width:120px;height:170px;border-radius:12px;border:2px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:28px;color:#001a2e;box-shadow:0 10px 20px rgba(0,0,0,0.25);position:relative}
+.card-face::after{content:attr(data-color);position:absolute;bottom:6px;right:8px;font-size:12px;font-weight:700;color:rgba(0,0,0,0.55)}
+.face-back{background:linear-gradient(135deg,#121c3a,#1a2750)}
+.actions{display:flex;flex-direction:column;gap:8px}
+.hand{grid-column:1 / -1;background:rgba(0,0,0,0.18);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:12px}
+.hand-cards{display:flex;flex-wrap:wrap;gap:8px}
+.card-small{width:86px;height:122px;border-radius:10px;border:2px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:22px;color:#001a2e;cursor:pointer;box-shadow:0 10px 16px rgba(0,0,0,0.22)}
+.card-small.red{background:linear-gradient(135deg,var(--red),#ff8080)}
+.card-small.yellow{background:linear-gradient(135deg,var(--yellow),#ffe08b)}
+.card-small.green{background:linear-gradient(135deg,var(--green),#6ee7b7)}
+.card-small.blue{background:linear-gradient(135deg,var(--blue),#87c6ff)}
+.card-small.wild{background:linear-gradient(135deg,#111,#333);color:#fff}
+.messages{margin-top:12px;color:var(--muted);min-height:20px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center}
+.modal[hidden]{display:none !important}
+.modal .modal-content{background:#0f1426;border:1px solid #202a47;border-radius:12px;padding:16px}
+.color-choices{display:flex;gap:8px;margin-top:8px}
+.color{width:40px;height:40px;border-radius:8px;border:none;cursor:pointer}
+.color.red{background:var(--red)}
+.color.yellow{background:var(--yellow)}
+.color.green{background:var(--green)}
+.color.blue{background:var(--blue)}
+.slam{position:fixed;inset:0;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center}
+.slam[hidden]{display:none !important}
+.slam-box{background:#0b1022;border:2px solid #f36;color:#ffd6e5;padding:20px 26px;border-radius:14px;text-align:center;box-shadow:0 12px 40px rgba(243,54,102,0.4)}
+.slam-title{font-weight:800;font-size:20px;margin-bottom:6px}
+@media (max-width:900px){.lobby-grid{grid-template-columns:1fr}.board{grid-template-columns:1fr}}
+
