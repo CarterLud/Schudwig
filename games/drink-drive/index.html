@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>DUI Racing Demo — Schudwig</title>
+    <meta name="description" content="Educational racing simulation demonstrating the dangers of drinking and driving." />
+    <meta name="theme-color" content="#000000" />
+    <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../styles.css" />
+    <link rel="stylesheet" href="drink-drive.css" />
+    <script defer src="drink-drive.js"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="nav">
+        <a class="brand" href="../../index.html" aria-label="Back to Schudwig">
+          <span class="brand-mark" aria-hidden="true">S</span>
+          <span class="brand-text">Schudwig</span>
+        </a>
+        <ul class="nav-links">
+          <li><a href="../../index.html#showcase">Showcase</a></li>
+          <li><a href="../../index.html#about">About</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main class="game-root">
+      <div class="statusbar" id="statusbar" aria-live="polite">
+        <div class="speed-display" id="speedDisplay">0 MPH</div>
+        <div class="title" id="gameTitle">DUI Racing Demo</div>
+        <div class="beer-count" id="beerCount">🍺 × 0</div>
+      </div>
+      <canvas id="game" aria-label="DUI Racing Demo game canvas" role="img"></canvas>
+      <div class="hud" id="hud" aria-hidden="true"></div>
+      <div class="help-chip" id="help">
+        <span>A/D or ←/→ • Steer</span>
+        <span>Space • Accelerate</span>
+        <span>R • Reset</span>
+      </div>
+      
+      <!-- Beer Selection Modal -->
+      <div class="beer-modal" id="beerModal" role="dialog" aria-modal="true" aria-labelledby="beerTitle">
+        <div class="beer-card">
+          <h2 id="beerTitle">⚠️ EDUCATIONAL SIMULATION</h2>
+          <p class="warning-text">This is a demonstration of how alcohol impairs driving ability.<br>
+          <strong>NEVER drink and drive in real life.</strong></p>
+          
+          <div class="beer-selection">
+            <h3>How many beers before racing?</h3>
+            <div class="beer-slider-container">
+              <input type="range" id="beerSlider" min="0" max="10" value="0" class="beer-slider">
+              <div class="beer-display">
+                <span id="beerSliderValue">0</span> beers
+              </div>
+            </div>
+            <div class="effects-preview" id="effectsPreview">
+              <div class="effect-item">Speed: <span id="speedEffect">Normal</span></div>
+              <div class="effect-item">Control: <span id="controlEffect">Normal</span></div>
+              <div class="effect-item">Vision: <span id="visionEffect">Clear</span></div>
+            </div>
+          </div>
+          
+          <div class="educational-text">
+            <p><strong>Real consequences of drinking and driving:</strong></p>
+            <ul>
+              <li>Impaired judgment and slower reaction times</li>
+              <li>Reduced coordination and vision problems</li>
+              <li>Legal consequences: fines, license suspension, jail time</li>
+              <li>Risk of serious injury or death to yourself and others</li>
+            </ul>
+          </div>
+          
+          <button id="startRaceBtn" class="btn btn-primary">Start Race</button>
+        </div>
+      </div>
+
+      <!-- Results Modal -->
+      <div class="results-modal" id="resultsModal" role="dialog" aria-modal="true" aria-labelledby="resultsTitle" style="display: none;">
+        <div class="results-card">
+          <h2 id="resultsTitle">Race Complete</h2>
+          <div class="results-stats" id="resultsStats"></div>
+          <div class="educational-message" id="educationalMessage"></div>
+          <button id="playAgainBtn" class="btn btn-primary">Try Again</button>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
