@@ -87,6 +87,7 @@
             <div class="label">Pile</div>
             <div id="discardTop" class="card-face face-back"></div>
           </div>
+          <div class="turn-indicator" id="turnArrow" aria-hidden="true"></div>
         </div>
 
         <div class="board">
@@ -118,6 +119,17 @@
         <div class="slam-box">
           <div class="slam-title">Keyboard Slam!</div>
           <div>Press Space now!</div>
+        </div>
+      </div>
+
+      <div id="unoOverlay" class="uno" hidden>
+        <div class="uno-box">
+          <div class="uno-title">UNO!</div>
+          <div class="uno-text"><span id="unoPlayerName">A player</span> has 1 card!</div>
+          <div class="uno-actions">
+            <button id="unoSelfBtn" class="btn btn-primary">Say UNO</button>
+            <button id="callUnoBtn" class="btn btn-accent">Call UNO</button>
+          </div>
         </div>
       </div>
     </main>

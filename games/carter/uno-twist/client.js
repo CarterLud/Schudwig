@@ -34,6 +34,11 @@
   const colorPicker = $('#colorPicker');
   const slamOverlay = $('#slamOverlay');
   const turnPlayerEl = $('#turnPlayer');
+  const turnArrow = $('#turnArrow');
+  const unoOverlay = $('#unoOverlay');
+  const unoPlayerName = $('#unoPlayerName');
+  const unoSelfBtn = $('#unoSelfBtn');
+  const callUnoBtn = $('#callUnoBtn');
 
   let ws;
   let playerId = null;
@@ -124,6 +129,19 @@
       case 'message':
         notify(msg.text);
         break;
+      case 'uno_window':
+        // Show UNO window to everyone
+        unoPlayerName.textContent = msg.playerName;
+        unoOverlay.hidden = false;
+        // Enable/disable self action if this client is the UNO player
+        const isSelf = msg.playerId === playerId;
+        unoSelfBtn.hidden = !isSelf;
+        callUnoBtn.hidden = isSelf;
+        break;
+      case 'uno_window_close':
+        unoOverlay.hidden = false; // quick flash will be hidden below
+        unoOverlay.hidden = true;
+        break;
       case 'error':
         notify(msg.message || 'Error');
         break;
@@ -158,19 +176,19 @@
     startBtn.disabled = (players.length < 1) || (playerId !== hostId);
   }
 
-  function renderCardFace(el, card) {
+  function renderCardFace(el, card, chosenColor) {
     el.className = 'card-face';
     if (!card) { el.classList.add('face-back'); el.textContent = ''; return; }
     if (card.type === 'wild') {
       el.classList.add('wild');
-      el.style.background = 'linear-gradient(135deg,#111,#333)';
+      el.style.removeProperty('background');
       el.style.color = '#fff';
       el.textContent = card.value;
-      el.setAttribute('data-color', currentColorDot.style.background || '');
+      if (chosenColor) el.setAttribute('data-color', chosenColor);
       return;
     }
     el.classList.add(card.color);
-    el.style.background = '';
+    el.style.removeProperty('background');
     el.textContent = card.value;
     el.setAttribute('data-color', card.color);
   }
@@ -190,12 +208,20 @@
   function renderState(state) {
     pinText.textContent = state.pin;
     turnPlayerEl.textContent = state.players[state.turnIndex].name;
-    renderCardFace(discardTop, state.discardTop);
-    currentColorDot.style.background = colorToHex(state.currentColor);
+    renderCardFace(discardTop, state.discardTop, state.currentColor);
     const me = state.players.find((p) => p.id === playerId);
     if (me) renderHand(me.hand);
     renderOpponents(state.players);
     updateUnoButton(me);
+    updateTurnArrow(state);
+  }
+
+  function updateTurnArrow(state) {
+    // Place arrow between deck and pile, rotate toward whose turn it is
+    const count = state.players.length;
+    const index = state.turnIndex % count;
+    const angle = (index / count) * 360; // rough mapping
+    turnArrow.style.transform = `rotate(${angle}deg)`;
   }
 
   function renderOpponents(players) {
@@ -270,6 +296,8 @@
 
   drawPileFace.onclick = () => send('draw', { pin: currentPin });
   unoBtn.onclick = () => send('uno', { pin: currentPin });
+  unoSelfBtn.onclick = () => { send('uno', { pin: currentPin }); unoOverlay.hidden = true; };
+  callUnoBtn.onclick = () => { send('call_uno', { pin: currentPin }); unoOverlay.hidden = true; };
 
   colorPicker.addEventListener('click', (e) => {
     const btn = e.target.closest('button.color');

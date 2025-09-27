@@ -266,11 +266,29 @@ function handlePlay(lobby, player, cardId, ws) {
   // Start UNO reaction window if player now has 1 card
   if (player.hand.length === 1) {
     setupUnoWindow(lobby, player);
+    broadcast(lobby, { type:'uno_window', playerId: player.id, playerName: player.name });
   }
-  // Draw penalties apply immediately and pass turn
+  // Draw penalties handling
   if (lobby.pendingDraw > 0) {
-    applyPendingDrawImmediate(lobby);
-    return;
+    if (card.type === 'wild' && card.value === '+4') {
+      // +4 always applies immediately to the next player and skips them
+      applyPendingDrawToNext(lobby);
+      return;
+    }
+    if (card.type === 'action' && card.value === 'Draw2') {
+      // Check if next player can stack another Draw2; if not, apply immediately
+      const n = lobby.players.length;
+      const nextIndex = (lobby.turnIndex + lobby.direction + n) % n;
+      const nextPlayer = lobby.players[nextIndex];
+      const canStack = !!nextPlayer.hand.find((c)=> c.type==='action' && c.value==='Draw2');
+      if (!canStack) {
+        applyPendingDrawToNext(lobby);
+        return;
+      }
+      // Hand off turn to next player without skipping; they must play Draw2 or click draw deck
+      advanceTurn(lobby, 0);
+      return;
+    }
   }
   advanceTurn(lobby, skipNext);
 }
@@ -280,21 +298,31 @@ function handleChooseColor(lobby, player, color, cardId) {
   if (!played || played.id !== cardId) return;
   if (!['red','yellow','green','blue'].includes(color)) return;
   lobby.currentColor = color;
-  advanceTurn(lobby);
-}
-
-function handleDraw(lobby, player) {
-  if (lobby.pendingDraw > 0) { applyPendingDrawImmediate(lobby); return; }
-  player.hand.push(drawCard(lobby));
-  // If they had one card and didn't say UNO, penalize 2 (simple detection)
-  if (player.hand.length === 2 && !player.saidUno) {
-    player.hand.push(drawCard(lobby), drawCard(lobby));
-    broadcast(lobby, { type:'message', text:`UNO penalty: ${player.name} draws 2` });
+  // After choosing color for a wild, apply pending draw if any and skip as needed
+  if (lobby.pendingDraw > 0) {
+    applyPendingDrawToNext(lobby);
+    return;
   }
   advanceTurn(lobby);
 }
 
-function applyPendingDrawImmediate(lobby) {
+function handleDraw(lobby, player) {
+  if (lobby.pendingDraw > 0) { applyPendingDrawToCurrent(lobby); return; }
+  player.hand.push(drawCard(lobby));
+  // If they had one card and didn't say UNO, penalize 2 (simple detection)
+  if (player.hand.length === 2 && !player.saidUno) {
+    // Only penalize if an UNO window existed and was unresolved or resolved against this player
+    if (lobby.unoWindow && lobby.unoWindow.playerId === player.id && !player.saidUno) {
+      player.hand.push(drawCard(lobby), drawCard(lobby));
+      broadcast(lobby, { type:'message', text:`UNO penalty: ${player.name} draws 2` });
+      lobby.unoWindow.resolved = true;
+      broadcast(lobby, { type:'uno_window_close' });
+    }
+  }
+  advanceTurn(lobby);
+}
+
+function applyPendingDrawToNext(lobby) {
   const n = lobby.players.length;
   const nextIndex = (lobby.turnIndex + lobby.direction + n) % n;
   const target = lobby.players[nextIndex];
@@ -303,6 +331,33 @@ function applyPendingDrawImmediate(lobby) {
   // skip the penalized player's turn
   lobby.turnIndex = nextIndex;
   advanceTurn(lobby, 1);
+}
+
+function applyPendingDrawToCurrent(lobby) {
+  const target = lobby.players[lobby.turnIndex];
+  for (let i=0;i<lobby.pendingDraw;i++) target.hand.push(drawCard(lobby));
+  lobby.pendingDraw = 0;
+  advanceTurn(lobby);
+}
+
+// Starts a brief UNO window. If the player is a bot, it will auto-say UNO after 1s
+function setupUnoWindow(lobby, player) {
+  try {
+    if (!lobby.started) return;
+    lobby.unoWindow && lobby.unoWindow.aiTimeout && clearTimeout(lobby.unoWindow.aiTimeout);
+    lobby.unoWindow = { playerId: player.id, resolved: false };
+    if (player.isBot) {
+      const ref = player;
+      lobby.unoWindow.aiTimeout = setTimeout(() => {
+        if (!lobby.unoWindow || lobby.unoWindow.resolved || lobby.unoWindow.playerId !== ref.id) return;
+        ref.saidUno = true;
+        broadcast(lobby, { type:'message', text: `${ref.name} says UNO!` });
+        lobby.unoWindow.resolved = true;
+        broadcast(lobby, { type:'uno_window_close' });
+        sendState(lobby);
+      }, 1000);
+    }
+  } catch {}
 }
 
 function passHands(lobby, offset) {
@@ -421,11 +476,35 @@ wss.on('connection', (ws) => {
       const player = lobby.players.find(p=>p.id===ws.playerId); if (!player) return;
       handleDraw(lobby, player);
       sendState(lobby);
+    } else if (t === 'call_uno') {
+      const lobby = lobbies[msg.pin]; if (!lobby || !lobby.unoWindow || lobby.unoWindow.resolved) return;
+      const caller = lobby.players.find(p=>p.id===ws.playerId); if (!caller) return;
+      if (lobby.unoWindow.playerId !== ws.playerId) {
+        const target = lobby.players.find(p=>p.id===lobby.unoWindow.playerId);
+        if (target && !target.saidUno) {
+          target.hand.push(drawCard(lobby), drawCard(lobby));
+          broadcast(lobby, { type:'message', text:`UNO penalty: ${target.name} draws 2 (called by ${caller.name})` });
+        }
+        lobby.unoWindow.resolved = true;
+        broadcast(lobby, { type:'uno_window_close' });
+        sendState(lobby);
+      }
     } else if (t === 'uno') {
       const lobby = lobbies[msg.pin]; if (!lobby) return;
       const player = lobby.players.find(p=>p.id===ws.playerId); if (!player) return;
       player.saidUno = true;
       broadcast(lobby, { type:'message', text: `${player.name} says UNO!` });
+      if (lobby.unoWindow && lobby.unoWindow.playerId !== player.id && !lobby.unoWindow.resolved) {
+        // Someone else called UNO first -> penalize the UNO player
+        const target = lobby.players.find(p=>p.id===lobby.unoWindow.playerId);
+        if (target) {
+          target.hand.push(drawCard(lobby), drawCard(lobby));
+          broadcast(lobby, { type:'message', text:`UNO penalty: ${target.name} draws 2` });
+        }
+        lobby.unoWindow.resolved = true;
+        broadcast(lobby, { type:'uno_window_close' });
+        sendState(lobby);
+      }
     } else if (t === 'slam') {
       const lobby = lobbies[ws.lobbyPin]; if (!lobby || !lobby.slamTrack) return;
       lobby.slamTrack.received.add(ws.playerId);
